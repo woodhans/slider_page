@@ -15,6 +15,21 @@
 		$('.popup_layer,.close').on('click',function(){
 			$.removePopup(id,direction);
 		});
+		var windowHeight=$(window).height(),windowWidth=$(window).width(),popWidth=$('.frame').width(),popHeight=$('.frame').height();
+		switch(direction){
+			case "up":
+			$('.popup').css('margin-left',(windowWidth-popWidth)/2);
+			break;
+			case "down":
+			$('.popup').css('margin-left',(windowWidth-popWidth)/2);
+			break;
+			case "left":
+			$('.popup').css('margin-top',(windowHeight-popHeight)/2);
+			break;
+			case "right":
+			$('.popup').css('margin-top',(windowHeight-popHeight)/2);
+			break;
+		}
 	}
 	$.removePopup=function(id,direction){
 		direction=direction||"down";

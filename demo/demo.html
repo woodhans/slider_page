@@ -6,12 +6,18 @@
 		<link rel="stylesheet" type="text/css" href="../jquery.slider.css"/>
 	</head>
 	<body>
-		<a href="javascript:;">left</a>
+		<a href="javascript:;" data-direction="left">left</a>
+		<a href="javascript:;" data-direction="right">right</a>
+		<a href="javascript:;" data-direction="up">up</a>
+		<a href="javascript:;" data-direction="down">down</a>
 		<script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js" type="text/javascript" charset="utf-8"></script>
-		<script src="../jquer.slider.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../jquery.slider.min.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
-			$('a').on('click',function(){
-				$.slider({url:'pages/page1.html',width:200,height:300,direction:"right",radius:5})
+			$('a').each(function(i,e){
+				$(e).on('click',function(){
+					dir=$(this).data('direction');
+					$.slider({url:'pages/page1.html',width:200,height:300,direction:dir,radius:5})
+				})
 			})
 		</script>
 	</body>
