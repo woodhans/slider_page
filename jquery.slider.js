@@ -10,12 +10,14 @@
 	function createSlider(url,direction,width,height,bgcolor,radius,id,zIndex){
 		width=typeof (width)=="number"?width+"px":width;
 		height=typeof (height)=="number"?height+"px":height;
+		bgcolor=typeof(bgcolor)=="string"?bgcolor:Hex2Color(bgcolor);
 		maskDiv=$('<div class="popup_layer" id="mask_'+id+'" style="z-index:'+zIndex+'"></div>').appendTo('body');
-		popDiv=$('<div class="popup" id="popup_'+id+'" style="z-index:'+zIndex+'"><div class="frame '+direction+'" style="background-color:'+Hex2Color(bgcolor)+';width:'+width+'; height:'+height+'; -webkit-border-radius:'+radius+'px; border-radius:'+radius+'px; padding:'+radius+'px"><iframe src="'+url+'"></iframe><div class="close" id="close_'+id+'" style="z-index: '+zIndex+'">X</div></div></div>').appendTo('body');
+		popDiv=$('<div class="popup" id="popup_'+id+'" style="z-index:'+zIndex+'"><div class="frame '+direction+'" style="background-color:'+bgcolor+';width:'+width+'; height:'+height+'; -webkit-border-radius:'+radius+'px; border-radius:'+radius+'px; padding:'+radius+'px"><iframe src="'+url+'"></iframe><div class="close" id="close_'+id+'" style="z-index: '+zIndex+'">X</div></div></div>').appendTo('body');
 		$('.popup_layer,.close').on('click',function(){
 			$.removePopup(id,direction);
 		});
-		var windowHeight=$(window).height(),windowWidth=$(window).width(),popWidth=$('.frame').width(),popHeight=$('.frame').height();
+		var docHeight=$(document).height(),windowHeight=$(window).height(),windowWidth=$(window).width(),popWidth=$('.frame').innerWidth(),popHeight=$('.frame').innerHeight();
+		$('.popup_layer').height(docHeight);
 		switch(direction){
 			case "up":
 			$('.popup').css('margin-left',(windowWidth-popWidth)/2);
@@ -32,7 +34,7 @@
 		}
 	}
 	$.removePopup=function(id,direction){
-		direction=direction||"down";
+		direction=direction||"up";
 		if(id){
 			$('#popup_'+id).find('.frame').addClass('remove_'+direction);
 		setTimeout(function(){
@@ -51,7 +53,7 @@
 	}
 	config.defaults={
 		url:'',
-		direction:'down',
+		direction:'up',
 		width:'100%',
 		height:'100%',
 		bgcolor:0xffffff,
