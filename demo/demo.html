@@ -16,7 +16,12 @@
 			$('a').each(function(i,e){
 				$(e).on('click',function(){
 					dir=$(this).data('direction');
-					$.slider({url:'pages/page1.html',width:200,height:300,direction:dir,radius:5})
+					$.slider({url:'pages/page1.html',width:200,height:300,direction:dir,radius:5,Completed:function(){
+						alert(dir);
+					},Closed:function(){
+						alert('closed '+dir)
+					}
+					})
 				})
 			})
 		</script>

@@ -16,7 +16,7 @@
 		maskDiv=$('<div class="popup_layer" id="mask_'+id+'" style="z-index:'+zIndex+'"></div>').appendTo('body');
 		popDiv=$('<div class="popup" id="popup_'+id+'" style="z-index:'+zIndex+'"><div class="frame '+direction+'" style="background-color:'+bgcolor+';width:'+width+'; height:'+height+'; -webkit-border-radius:'+radius+'px; border-radius:'+radius+'px; padding:'+radius+'px"><iframe src="'+url+'"></iframe><div class="close" id="close_'+id+'" style="z-index: '+zIndex+'">X</div></div></div>').appendTo('body');
 		$('.popup_layer,.close').on('click',function(){
-			$.removePopup(id,direction,closecallback);
+			$.removeSlider(id,direction,closecallback);
 		});
 		var docHeight=$(document).height(),windowHeight=$(window).height(),windowWidth=$(window).width(),popWidth=$('.frame').innerWidth(),popHeight=$('.frame').innerHeight();
 		$('.popup_layer').height(docHeight);
@@ -38,17 +38,18 @@
 			window.setTimeout(callback,600);
 		}
 	}
-	$.removePopup=function(id,direction,closecallback){
+	$.removeSlider=function(id,direction,closecallback){
 		direction=direction||"up";
 		if(id){
 			$('#popup_'+id).find('.frame').addClass('remove_'+direction);
+		if(closecallback){
+				setTimeout(closecallback,500);
+			}
 		setTimeout(function(){
 			$('#mask_'+id).remove();
 			$('#popup_'+id).remove();
 		},600);
-			if(closecallback){
-				setTimeout(closecallback,600);
-			}
+			
 		}else{
 			$('div[id*=mask_]').remove();
 			$('div[id*=popup_]').remove();
