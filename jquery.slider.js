@@ -1,4 +1,5 @@
 /*! author Hans.Wu http://www.hanswu.com
+ * project: https://github.com/woodhans/slider_page
  require jquery 1.6+*/
 (function (factory) {
 	if (typeof define === 'function' && define.amd) {
