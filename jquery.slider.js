@@ -15,24 +15,27 @@
 		callback=typeof (callback)=="function"?callback:null;
 		closecallback=typeof (closecallback)=="function"?closecallback:null;
 		maskDiv=$('<div class="popup_layer" id="mask_'+id+'" style="z-index:'+zIndex+'"></div>').appendTo('body');
-		popDiv=$('<div class="popup" id="popup_'+id+'" style="z-index:'+zIndex+'"><div class="frame '+direction+'" style="background-color:'+bgcolor+';width:'+width+'; height:'+height+'; -webkit-border-radius:'+radius+'px; border-radius:'+radius+'px; padding:'+radius+'px"><iframe src="'+url+'"></iframe><div class="close" id="close_'+id+'" style="z-index: '+zIndex+'">X</div></div></div>').appendTo('body');
-		$('.popup_layer,.close').on('click',function(){
+		popDiv=$('<div class="popup" id="popup_'+id+'" style="z-index:'+zIndex+'"><div class="frame '+direction+'" style="background-color:'+bgcolor+';width:'+width+'; height:'+height+'; -webkit-border-radius:'+radius+'px; -moz-border-radius:'+radius+'px; border-radius:'+radius+'px;"><iframe src="'+url+'" frameborder="no" scrolling="no"></iframe><div class="close" id="close_'+id+'" style="z-index: '+zIndex+'">X</div></div></div>').appendTo('body');
+		$('.popup,.close').on('click',function(){
 			$.removeSlider(id,direction,closecallback);
 		});
 		var docHeight=$(document).height(),windowHeight=$(window).height(),windowWidth=$(window).width(),popWidth=$('.frame').innerWidth(),popHeight=$('.frame').innerHeight();
 		$('.popup_layer').height(docHeight);
 		switch(direction){
 			case "up":
-			$('.popup').css('margin-left',(windowWidth-popWidth)/2);
+			$('.popup').css('padding-left',(windowWidth-popWidth)/2);
 			break;
 			case "down":
-			$('.popup').css('margin-left',(windowWidth-popWidth)/2);
+			$('.popup').css('padding-left',(windowWidth-popWidth)/2);
 			break;
 			case "left":
-			$('.popup').css('margin-top',(windowHeight-popHeight)/2);
+			$('.popup').css('padding-top',(windowHeight-popHeight)/2);
 			break;
 			case "right":
-			$('.popup').css('margin-top',(windowHeight-popHeight)/2);
+			$('.popup').css('padding-top',(windowHeight-popHeight)/2);
+			break;
+			case "center":
+			$('.popup').css('padding-left',(windowWidth-popWidth)/2).css('padding-top',(windowHeight-popHeight)/2);
 			break;
 		}
 		if(callback){
