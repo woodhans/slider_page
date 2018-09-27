@@ -16,7 +16,8 @@
 		closecallback=typeof (closecallback)=="function"?closecallback:null;
 		maskDiv=$('<div class="popup_layer" id="mask_'+id+'" style="z-index:'+zIndex+'"></div>').appendTo('body');
 		popDiv=$('<div class="popup" id="popup_'+id+'" style="z-index:'+zIndex+'"><div class="frame '+direction+'" style="background-color:'+bgcolor+';width:'+width+'; height:'+height+'; -webkit-border-radius:'+radius+'px; -moz-border-radius:'+radius+'px; border-radius:'+radius+'px;"><iframe src="'+url+'" frameborder="no" scrolling="no"></iframe><div class="close" id="close_'+id+'" style="z-index: '+zIndex+'">X</div></div></div>').appendTo('body');
-		$('.popup,.close').on('click',function(){
+		$('.popup,.close').on('click',function(e){
+			e.stopPropagation();
 			$.removeSlider(id,direction,closecallback);
 		});
 		var docHeight=$(document).height(),windowHeight=$(window).height(),windowWidth=$(window).width(),popWidth=$('.frame').innerWidth(),popHeight=$('.frame').innerHeight();
@@ -43,23 +44,36 @@
 		}
 	}
 	$.removeSlider=function(id,direction,closecallback){
-		direction=direction||"up";
-		if(id){
-			$('#popup_'+id).find('.frame').addClass('remove_'+direction);
-		if(closecallback){
-				setTimeout(closecallback,500);
+		if(typeof(id)=="function"){
+			closecallback=id;
+			direction="up";
+			id="";
+		}else if(id=="up"||id=="down"||id=="left"||id=="right"||id=="center"){
+			if(typeof(direction)=="function"){
+				closecallback=direction;
 			}
-		setTimeout(function(){
-			$('#mask_'+id).remove();
-			$('#popup_'+id).remove();
-		},600);
+			direction=id;
+			id="";
+		}
+		if(typeof(direction)=="function"){
+			closecallback=direction;
+			direction="up";
+		}
+		
+		if($('#popup_'+id).length==1){
+			$('#popup_'+id).find('.frame').addClass('remove_'+direction);
+			if(closecallback)
+				setTimeout(closecallback,500);
 			
+			setTimeout(function(){
+				$('#mask_'+id).remove();
+				$('#popup_'+id).remove();
+			},600);
 		}else{
 			$('div[id*=mask_]').remove();
 			$('div[id*=popup_]').remove();
-			if(closecallback){
+			if(closecallback)
 				setTimeout(closecallback,100);
-			}
 		}
 	}
 	var config = $.slider = function (options) {
