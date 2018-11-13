@@ -2,7 +2,9 @@
 <html>
 
 <head>
-  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="author" content="Hans.Wu, hans.wu@hanswu.com" />
   <title>jQuery.slider Demo</title>
   <link rel="stylesheet" href="//cdn.bootcss.com/minireset.css/0.0.2/minireset.min.css" />
   <link rel="stylesheet" type="text/css" href="../jquery.slider.css" />
@@ -16,22 +18,20 @@
   <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js" type="text/javascript" charset="utf-8"></script>
   <script src="../jquery.slider.min.js" type="text/javascript" charset="utf-8"></script>
   <script type="text/javascript">
-    $('a').each(function(i, e) {
-      $(e).on('click', function() {
-        dir = $(this).data('direction');
-        $.slider({
-          url: 'pages/page1.html',
-          width: 200,
-          height: 300,
-          direction: dir,
-          radius: 5,
-          Completed: function() {
-            alert(dir);
-          },
-          Closed: function() {
-            alert('closed ' + dir)
-          }
-        })
+    $('a').on('click', function() {
+      dir = $(this).data('direction');
+      $.slider({
+        url: 'pages/page1.html',
+        width: "auto",
+        height: "auto",
+        direction: dir,
+        radius: 5,
+        Completed: function() {
+          alert(dir);
+        },
+        Closed: function() {
+          alert('closed ' + dir)
+        }
       })
     })
   </script>
